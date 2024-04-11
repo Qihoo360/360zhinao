@@ -28,14 +28,14 @@
  - **360Zhinao-7B-Chat-360K**
 
 
-The characteristics of the 360Zhinao open-source project are：
-- **Base Model:** Leveraging a high-quality corpus of 3.4 trillion Tokens, primarily in Chinese, English and code, we achieved competitive performance on relevant benchmark evaluations of the same scale.
-- **Chat Model:** Powerful chat capabilities and three different sequence lengths of 4K, 32K and 360K. 360K (around 500K Chinese characters) is the longest sequcence length among open-sourced Chinese models until now (Apr. 10, 2024). 
+The characteristics of the 360Zhinao open-source models are：
+- **Base Model:** Leveraging a high-quality corpus of 3.4 trillion Tokens which mainly consist of Chinese, English and code, we achieved competitive performance on relevant benchmark evaluations of the same model scale.
+- **Chat Model:** Powerful chat capabilities and three different sequence lengths of 4K, 32K and 360K. 360K (about 500k Chinese characters) is the longest sequcence length among open-sourced Chinese models until now.
 
 <br>
 
 # News and Updates
-- 2024.04.10 We release **360Zhinao-7B** 1.0 version,  include the base model and three chat model with sequence length of 4K, 32K, 360K. 
+- 2024.04.11 We release **360Zhinao-7B** 1.0 version,  include the base model and three chat model with sequence lengths of 4K, 32K adn 360K. 
 
 <br>
 
@@ -62,7 +62,7 @@ See the following table for this release and download links:
 
 # Model Evaluation
 ## Base Model
-We validate the performance of our model on the mainstream OpenCompass evaluation datasets, including C-Eval, AGIEval, MMLU, CMMLU, HellaSwag, MATH, GSM8K, HumanEval, MBPP, BBH, LAMBADA. The competencies examined include natural language understanding, knowledge, mathematical computation and reasoning, code generation, logical reasoning, etc.
+We evaluate the performance of our model on the OpenCompass evaluation datasets, including C-Eval, AGIEval, MMLU, CMMLU, HellaSwag, MATH, GSM8K, HumanEval, MBPP, BBH, LAMBADA. The ablity evaluated of model include natural language understanding, knowledge, mathematical computation and reasoning, code generation, logical reasoning, etc.
 
 | <div style="width: 100pt">Model</div> | AVG   | CEval | AGIEval | MMLU | CMMLU | HellaSwag | MATH | GSM8K | HumanEval | MBPP | BBH | LAMBADA |
 |:----------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
@@ -86,31 +86,22 @@ The above results could be viewed or reproduced on [Opencompass](https://rank.op
 
 ## Chat Models
 
-We evaluated our models across various lengths and benchmarks.
-
-- ### Alignment Benchmarks
-  We evaluated our model against [MT-bench](https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge), a benchmark with 80 high-quality multi-turn dialogue questions to test the capabilities of multi-turn dialogue and instruction following. MT-bench consists of 8 common user prompt categories: writing, role-play, extraction, reasoning, mathematics, coding, knowledge I (STEM), and knowledge II (humanities/social sciences). For each category, 10 multi-turn questions were manually designed, each turn has 2 questions, and the answers are scored using GPT4 (accessed on Apr. 8, 2024).
-    | Model                 | turn1     | turn2     | average   | 
-    | --------------------  |:---------:|:---------:|:---------:| 
-    | Qwen7b-chat           | 6.5725    | 5.4000    | 5.9862    |
-    | Baichuan2-7B-Chat     | 6.4562    | 5.5562    | 6.0062    |
-    | InternLM-7B-Chat      | 5.5625    | 4.0696    | 4.8207    | 
-    | 360Zhinao-7B-Chat-4K     | 6.5062    | **5.8762**    | **6.1962**    | 
-
-
-- ### Long Context Benchmarks
-
   We adopted a two-stage approach to train the long context models.
 
-  - In the first stage, we increased RoPE base and extended the context length to 32K.
+  **First stage**: We increased RoPE base and extended the context length to 32K.
     - Firstly, we performed Continual Pretraining on approximately 5B tokens with a 32K context window.
     - Then during the SFT stage, we fine-tuned the model using long data from various sources, including high-quality human-labeled 32K data.
 
-  - In the second stage, we extended the context length to 360K, training with the following data:
+  **Second stage**: We extended the context length to 360K, training with the following data:
     - A small amount of high-quality human-labeled super-long data.
     - Due to the scarcity of annotated super-long data, we constructed various forms of synthetic data.
         - Multi-Doc QA: Similar to [Ziya-Reader](https://arxiv.org/abs/2311.09198), we generated multi-document QA pairs based on 360's database. Multiple QA pairs are constructed for one row of Multi-Doc QA data input, resulting in a multi-turn format and significantly improving the training efficiency.
         - Single-Doc QA: Similar to [LLama2 Long](https://arxiv.org/abs/2309.16039), we constructed multi-turn QA data based on different segments within one row of long-text input.
+
+We evaluated our models across various lengths and benchmarks.
+
+- ### Long Context Benchmarks
+
 
   We evaluated our 32K and 360K models on [LongBench](https://github.com/THUDM/LongBench), a multi-task bilingual benchmark for long contexts. We report results on Chinese tasks that are the most relevant to downstream applications: Single/Multi-Doc QA, Summarization, Few-Shot Learning and Code Completion.
 
@@ -123,15 +114,14 @@ We evaluated our models across various lengths and benchmarks.
     | Qwen1.5-Chat-7B           | 36.75     | 52.85    | 30.08     | 14.28     | 32           | 54.55     |
     | Qwen1.5-Chat-14B          | 39.80     | 60.39    | 27.99     | 14.77     | 37           | 58.87     |
     | 360Zhinao-7B-Chat-32K     | **45.18** | 57.18    | **48.06** | 15.03     | **44**       | 61.64     |
-    | 360Zhinao-7B-Chat-360K    | 39.25     | 52.82    | 48.01     | 14.4      | 41.25        | 39.75     |
 
 - ### 360Zhinao-7B-Chat-360K on "NeedleInAHaystack"
 
-  [NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack/blob/main/LLMNeedleHaystackTester.py) places one small piece of information in different positions of long text and queries this information as a test of LLM's long-context capabilities.
+  [NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) places one small piece of information in different positions of long text and queries this information as a test of LLM's long-context capabilities.
 
   360Zhinao-7B-Chat-360K could achieve over 98% accuracy on both English and Chinese NeedleInAHaystack tasks.
 
-  - English version（same as [NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack/blob/main/LLMNeedleHaystackTester.py)）
+  - English version（same as [NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)）
   
     <p align="center">
         <img src="assets/360Zhinao-7B-Chat-360K.en_score.png" width="600" />
@@ -273,7 +263,7 @@ pred = model.generate(input_ids=inputs["input_ids"], generation_config=generatio
 print("outputs:\n", tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 ```
 
-### Demonstration of Base Model Inference
+### Demonstration of Chat Model Inference
 
 This code demonstrates using ModelScope to quickly use the 360Zhinao-7B-Chat-4K model for inference.
 
@@ -358,15 +348,7 @@ curl --location --request POST 'http://localhost:8360/v1/chat/completions' \
 
 # Model Inference
 ## Quantization
-We provide quantization schemes based on AutoGPTQ and open source the Int4 quantization models. The quantization model has little effect loss, but it can significantly reduce the video memory occupation and improve the inference speed.
-
-The BF16, Int8, and Int4 models are tested on the benchmarks, and the results are as follows:
-
-| Quantization | MMLU | CEval (val) | GSM8K | Humaneval |
-|-|-|-|-|-|
-| 360Zhinao-7B-Chat-4K (BF16) |-|-|-|-|
-| 360Zhinao-7B-Chat-4K (Int8) |-|-|-|-|
-| 360Zhinao-7B-Chat-4K (Int4) |-|-|-|-|
+We provide quantization schemes based on AutoGPTQ and open source the Int4 quantization models. 
 
 ## Deployment
 ### vLLM Installation
@@ -429,7 +411,7 @@ Use python to request the service
 ```python
 from openai import OpenAI
 openai_api_key = "EMPTY"
-openai_api_base = "http://localhost:8000/v1"
+openai_api_base = "http://localhost:8360/v1"
 
 client = OpenAI(
     api_key=openai_api_key,

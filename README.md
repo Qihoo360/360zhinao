@@ -20,7 +20,7 @@
 
 <br>
 
-# 项目介绍
+# 模型介绍
  🎉🎉🎉我们开源了360智脑大模型的系列工作，本次开源了以下模型：
  - **360Zhinao-7B-Base**
  - **360Zhinao-7B-Chat-4K**
@@ -87,29 +87,22 @@
 
 ## Chat模型
 
-我们在多种长度和多种任务的评测Benchmark上验证不同版本模型的性能。
-
-- ### Chat模型对话能力评测
-  我们使用MT-Bench验证模型的多轮对话效果。[MT-bench](https://github.com/lm-sys/FastChat/tree/main/fastchat/llm_judge)由80个高质量的多轮对话问题组成，旨在测试多轮对话和指令遵循能力。MT-bench包含8个常见的prompt类别：写作、角色扮演、提取、推理、数学、编码、知识I（STEM）和知识II（人文/社会科学）。每个类别中人工设计了10个问题，每个问题2轮，使用GPT4（2024年4月8日访问）打分。
-    | Model                 | turn1     | turn2     | average   | 
-    | --------------------  |:---------:|:---------:|:---------:| 
-    | Qwen7b-chat           | 6.5725    | 5.4000    | 5.9862    |
-    | Baichuan2-7B-Chat     | 6.4562    | 5.5562    | 6.0062    |
-    | InternLM-7B-Chat      | 5.5625    | 4.0696    | 4.8207    | 
-    | 360Zhinao-7B-Chat-4K     | 6.5062    | **5.8762**    | **6.1962**    |
-    
-- ### Chat模型长文本能力评测
-
   我们采用两阶段的方式训练长文本模型.
-  - 第一阶段，我们增大RoPE base，将上下文长度扩展至32K训练：
+  
+  **第一阶段**：我们增大RoPE base，将上下文长度扩展至32K训练：
     - 首先，对基础模型进行了约5B tokens的32K窗口继续预训练。
     - 接着，SFT阶段使用了多种形式和来源的长文本数据，包括高质量的人工标注32K长文本数据。
 
-  - 第二阶段，我们将上下文长度扩展至360K进行训练，使用数据如下：
+  **第二阶段**：我们将上下文长度扩展至360K进行训练，使用数据如下：
     - 少量高质量人工标注数据。
     - 由于带有标注的超长文本数据的稀缺性，我们构造了多种形式的合成数据：
       - 多文档问答：类似[Ziya-Reader](https://arxiv.org/abs/2311.09198)，我们基于360自有数据构造了多种类型的多文档问答数据，同时将问答改为多轮，显著提升长文本的训练效率。
       - 单文档问答：类似[LLama2 Long](https://arxiv.org/abs/2309.16039)，我们构造了基于超长文本各个片段的多轮问答数据。
+
+我们在多种长度和多种任务的评测Benchmark上验证不同版本模型的性能。
+
+- ### 360Zhinao-7B-Chat-32K模型长文本能力评测
+
 
   我们使用LongBench验证长文本效果。[LongBench](https://github.com/THUDM/LongBench)是第一个多任务、中英双语、针对大语言模型长文本理解能力的评测基准。LongBench由六大类、二十一个不同的任务组成，我们选择其中与中文长文本应用最密切相关的中文单文档问答、多文档问答、摘要、Few-shot等任务进行评测。
 
@@ -122,15 +115,14 @@
     | Qwen1.5-Chat-7B           | 36.75     | 52.85    | 30.08     | 14.28     | 32           | 54.55     |
     | Qwen1.5-Chat-14B          | 39.80     | 60.39    | 27.99     | 14.77     | 37           | 58.87     |
     | 360Zhinao-7B-Chat-32K     | **45.18** | 57.18    | **48.06** | 15.03     | **44**       | 61.64     |
-    | 360Zhinao-7B-Chat-360K    | 39.25     | 52.82    | 48.01     | 14.4      | 41.25        | 39.75     |
 
 - ### 360Zhinao-7B-Chat-360K“大海捞针”测试
 
-  大海捞针测试（[NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack/blob/main/LLMNeedleHaystackTester.py)）是将关键信息插入一段长文本的不同位置，再对该关键信息提问，从而测试大模型的长文本能力的一种方法。
+  大海捞针测试（[NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)）是将关键信息插入一段长文本的不同位置，再对该关键信息提问，从而测试大模型的长文本能力的一种方法。
 
   360Zhinao-7B-Chat-360K在中英文大海捞针中都能达到98%以上的准确率。
 
-  - 英文"大海捞针"（和[NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack/blob/main/LLMNeedleHaystackTester.py)相同）
+  - 英文"大海捞针"（和[NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)相同）
   
     <p align="center">
         <img src="assets/360Zhinao-7B-Chat-360K.en_score.png" width="600" />
@@ -359,15 +351,7 @@ curl --location --request POST 'http://localhost:8360/v1/chat/completions' \
 
 # 模型推理
 ## 模型量化
-我们提供了基于AutoGPTQ的量化方案，并开源了Int4量化模型。模型的效果损失很小，但能显著降低显存占用并提升推理速度。
-
-对BF16，Int8和Int4模型在基准评测上做了测试，结果如下所示：
-
-| Quantization | MMLU | CEval (val) | GSM8K | Humaneval |
-|-|-|-|-|-|
-| 360Zhinao-7B-Chat-4K (BF16) |-|-|-|-|
-| 360Zhinao-7B-Chat-4K (Int8) |-|-|-|-|
-| 360Zhinao-7B-Chat-4K (Int4) |-|-|-|-|
+我们提供了基于AutoGPTQ的量化方案，并开源了Int4量化模型。
 
 ## 模型部署
 ### vLLM安装环境
@@ -431,7 +415,7 @@ curl http://localhost:8360/v1/chat/completions \
 from openai import OpenAI
 # Set OpenAI's API key and API base to use vLLM's API server.
 openai_api_key = "EMPTY"
-openai_api_base = "http://localhost:8000/v1"
+openai_api_base = "http://localhost:8360/v1"
 
 client = OpenAI(
     api_key=openai_api_key,
@@ -555,4 +539,4 @@ bash finetune/ds_finetune.sh
 
 本仓库源码遵循开源许可证Apache 2.0。
 
-360智脑开源模型支持商用，若需将本模型及衍生模型用于商业用途，请通过邮箱（g-zhinao-opensource@360.cn）联系进行申请， 具体许可协议请见[《360智脑开源模型许可证》](./360智脑开源模型许可证.txt)。
+360智脑开源模型支持商用，若需将本模型及衍生模型用于商业用途，请通过邮箱(g-zhinao-opensource@360.cn)联系进行申请， 具体许可协议请见[《360智脑开源模型许可证》](./360智脑开源模型许可证.txt)。
