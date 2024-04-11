@@ -326,9 +326,9 @@ python openai_api.py
 
 Request parameter
 ```shell
-curl --location --request POST 'http://localhost:8360/v1/chat/completions' \
---header 'Content-Type: application/json' \
---data-raw '{
+curl 'http://localhost:8360/v1/chat/completions' \
+-H 'Content-Type: application/json' \
+-d '{
     "max_new_tokens": 200,
     "do_sample": true,
     "top_k": 0,
@@ -336,10 +336,8 @@ curl --location --request POST 'http://localhost:8360/v1/chat/completions' \
     "temperature": 1.0,
     "repetition_penalty": 1.0,
     "messages": [
-        {
-            "role": "user",
-            "content": "你叫什么名字？"
-        }
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "你好"}
     ]
 }'
 ```
