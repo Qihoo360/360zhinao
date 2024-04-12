@@ -35,7 +35,7 @@ The characteristics of the 360Zhinao open-source models are：
 <br>
 
 # News and Updates
-- 2024.04.12 We release **360Zhinao-7B** 1.0 version,  include the base model and three chat model with sequence lengths of 4K, 32K adn 360K. 
+- 2024.04.12 We release **360Zhinao-7B** 1.0 version,  include the base model and three chat model with sequence lengths of 4K, 32K and 360K. 
 
 <br>
 
