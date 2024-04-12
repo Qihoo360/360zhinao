@@ -105,7 +105,7 @@ We evaluated our models across various lengths and benchmarks.
 
   We evaluated our 32K and 360K models on [LongBench](https://github.com/THUDM/LongBench), a multi-task bilingual benchmark for long contexts. We report results on Chinese tasks that are the most relevant to downstream applications: Single/Multi-Doc QA, Summarization, Few-Shot Learning and Code Completion.
 
-    | Model                     | Avg       | 单文档QA  | 多文档QA   | 摘要       | Few-shot学习 | 代码补全    |
+    | Model                     | Avg       | Single-Doc QA  | Multi-Doc QA | Summarization | Few-Shot Learning | Code Completion |
     | :------------------------ |:---------:|:--------:|:---------:|:---------:|:------------:|:---------:|
     | GPT-3.5-Turbo-16k         | 37.84     | 61.2     | 28.7      | 16        | 29.2         | 54.1      |
     | ChatGLM2-6B-32k           | 37.16     | 51.6     | 37.6      | 16.2      | 27.7         | 52.7      |
