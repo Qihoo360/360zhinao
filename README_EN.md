@@ -533,4 +533,4 @@ bash finetune/ds_finetune.sh
 
 The source code of this warehouse follows the open source license Apache 2.0.
 
-The 360 ​Zhinao open source model supports commercial use. If you need to use this model and its derivative models for commercial purposes, please contact us via email (g-zhinao-opensource@360.cn) to apply. For the specific license agreement, please see [《360 Zhinao Open Source Model License》](./360智脑开源模型许可证.txt).
+The 360 ​Zhinao open source model supports commercial use. If you need to use this model and its derivative models for commercial purposes, please contact us via email (g-zhinao-opensource@360.cn) to apply. For the specific license agreement, please see [《360 Zhinao Open Source Model License》](https://github.com/Qihoo360/360zhinao/blob/main/360%E6%99%BA%E8%84%91%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E8%AE%B8%E5%8F%AF%E8%AF%81.txt).

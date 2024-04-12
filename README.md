@@ -537,4 +537,4 @@ bash finetune/ds_finetune.sh
 
 本仓库源码遵循开源许可证Apache 2.0。
 
-360智脑开源模型支持商用，若需将本模型及衍生模型用于商业用途，请通过邮箱(g-zhinao-opensource@360.cn)联系进行申请， 具体许可协议请见[《360智脑开源模型许可证》](./360智脑开源模型许可证.txt)。
+360智脑开源模型支持商用，若需将本模型及衍生模型用于商业用途，请通过邮箱(g-zhinao-opensource@360.cn)联系进行申请， 具体许可协议请见[《360智脑开源模型许可证》](https://github.com/Qihoo360/360zhinao/blob/main/360%E6%99%BA%E8%84%91%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E8%AE%B8%E5%8F%AF%E8%AF%81.txt)。
