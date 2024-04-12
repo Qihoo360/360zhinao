@@ -1,11 +1,11 @@
 <p align="left">
-    <a href="./README.md">中文</a> ｜ &nbsp English</a>&nbsp
+    中文</a>&nbsp ｜ &nbsp<a href="README_EN.md">English</a>&nbsp
 </p>
 <br>
 
 <div align="center">
 <h1>
-  360Zhinao (360智脑)
+  360智脑
 </h1>
 </div>
 <div align="center">
@@ -15,44 +15,43 @@
 </div>
 <br>
 <p align="center">
- Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience.
+ 欢迎访问360智脑官网<a href="https://ai.360.com"> https://ai.360.com </a>体验更多更强大的功能。
 </p>
 
 <br>
 
-# Models Introduction
- 🎉🎉🎉We open-source the 360Zhinao model series:
+# 模型介绍
+ 🎉🎉🎉我们开源了360智脑大模型的系列工作，本次开源了以下模型：
  - **360Zhinao-7B-Base**
  - **360Zhinao-7B-Chat-4K**
  - **360Zhinao-7B-Chat-32K**
  - **360Zhinao-7B-Chat-360K**
 
-
-The characteristics of the 360Zhinao open-source models are：
-- **Base Model:** Leveraging a high-quality corpus of 3.4 trillion Tokens which mainly consist of Chinese, English and code, we achieved competitive performance on relevant benchmark evaluations of the same model scale.
-- **Chat Model:** Powerful chat capabilities and three different sequence lengths of 4K, 32K and 360K. 360K (about 500k Chinese characters) is the longest sequcence length among open-sourced Chinese models until now.
-
-<br>
-
-# News and Updates
-- 2024.04.11 We release **360Zhinao-7B** 1.0 version,  include the base model and three chat model with sequence lengths of 4K, 32K adn 360K. 
+360智脑大模型特点如下：
+- **基础模型**：采用 3.4 万亿 Tokens 的高质量语料库训练，以中文、英文、代码为主，在相关基准评测中，同尺寸有竞争力。
+- **对话模型**：具有强大的对话能力，开放4K、32K、360K三种不同文本长度。据了解，360K（约50万字）是当前国产开源模型文本长度最长的。
 
 <br>
 
-# Table of contents
-- [Download URL](#Download-URL)
-- [Model Evaluation](#Model-Evaluation)
-- [Quickstart](#Quickstart)
-- [Model Inference](#Model-Inference)
-- [Model Finetune](#Model-Finetune)
-- [License](#License)
+# 更新信息
+- [2024.04.10] 我们发布了360Zhinao-7B 1.0版本，同时开放Base模型和4K、32K、360K三种文本长度的Chat模型。
 
 <br>
 
-# Download URL
-See the following table for this release and download links:
+# 目录
+- [下载地址](#下载地址)
+- [模型评估](#模型评估)
+- [快速开始](#快速开始)
+- [模型推理](#模型推理)
+- [模型微调](#模型微调)
+- [许可证](#许可证)
+
+<br>
+
+# 下载地址
+本次发布版本和下载链接见下表：
 | Size | Model | BF16 | Int4|
-|-|-|-|-|
+|:-:|-|:-:|:-:|
 | 7B | 360Zhinao-7B-Base | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Base/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Base">🤗</a> |  |
 | 7B | 360Zhinao-7B-Chat-4K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-4K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-4K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-4K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-4K-Int4">🤗</a> |
 | 7B | 360Zhinao-7B-Chat-32K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-32K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-32K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-32K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-32K-Int4">🤗</a> |
@@ -60,9 +59,11 @@ See the following table for this release and download links:
 
 <br>
 
-# Model Evaluation
-## Base Model
-We evaluate the performance of our model on the OpenCompass evaluation datasets, including C-Eval, AGIEval, MMLU, CMMLU, HellaSwag, MATH, GSM8K, HumanEval, MBPP, BBH, LAMBADA. The ablity evaluated of model include natural language understanding, knowledge, mathematical computation and reasoning, code generation, logical reasoning, etc.
+# 模型评估
+
+## 基础模型
+我们在OpenCompass的主流评测数据集上验证了我们的模型性能，包括C-Eval、AGIEval、MMLU、CMMLU、HellaSwag、MATH、GSM8K、HumanEval、MBPP、BBH、LAMBADA，考察的能力包括自然语言理解、知识、数学计算和推理、代码生成、逻辑推理等。
+
 
 | <div style="width: 100pt">Model</div> | AVG   | CEval | AGIEval | MMLU | CMMLU | HellaSwag | MATH | GSM8K | HumanEval | MBPP | BBH | LAMBADA |
 |:----------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
@@ -82,30 +83,30 @@ We evaluate the performance of our model on the OpenCompass evaluation datasets,
 | Yi-6B                 | 47.8      | 73        | 44.3      | 64        | **73.5**  | 73.1      | 6.3       | 39.9      | 15.2      | 23.6      | 44.9      | 68        |
 | **360Zhinao-7B**      | 56.15     | **74.11** | 49.49     | **67.44** | 72.38     | **83.05** | 16.38     | 53.83     | 35.98     | 42.4      | 43.95     | **78.59** |
 
-The above results could be viewed or reproduced on [Opencompass](https://rank.opencompass.org.cn/leaderboard-llm).
+以上结果，在官方[Opencompass](https://rank.opencompass.org.cn/leaderboard-llm)上可查询或可复现。
 
-## Chat Models
+## Chat模型
 
-  We adopted a two-stage approach to train the long context models.
+  我们采用两阶段的方式训练长文本模型.
+  
+  **第一阶段**：我们增大RoPE base，将上下文长度扩展至32K训练：
+    - 首先，对基础模型进行了约5B tokens的32K窗口继续预训练。
+    - 接着，SFT阶段使用了多种形式和来源的长文本数据，包括高质量的人工标注32K长文本数据。
 
-  **First stage**: We increased RoPE base and extended the context length to 32K.
-    - Firstly, we performed Continual Pretraining on approximately 5B tokens with a 32K context window.
-    - Then during the SFT stage, we fine-tuned the model using long data from various sources, including high-quality human-labeled 32K data.
+  **第二阶段**：我们将上下文长度扩展至360K进行训练，使用数据如下：
+    - 少量高质量人工标注数据。
+    - 由于带有标注的超长文本数据的稀缺性，我们构造了多种形式的合成数据：
+      - 多文档问答：类似[Ziya-Reader](https://arxiv.org/abs/2311.09198)，我们基于360自有数据构造了多种类型的多文档问答数据，同时将问答改为多轮，显著提升长文本的训练效率。
+      - 单文档问答：类似[LLama2 Long](https://arxiv.org/abs/2309.16039)，我们构造了基于超长文本各个片段的多轮问答数据。
 
-  **Second stage**: We extended the context length to 360K, training with the following data:
-    - A small amount of high-quality human-labeled super-long data.
-    - Due to the scarcity of annotated super-long data, we constructed various forms of synthetic data.
-        - Multi-Doc QA: Similar to [Ziya-Reader](https://arxiv.org/abs/2311.09198), we generated multi-document QA pairs based on 360's database. Multiple QA pairs are constructed for one row of Multi-Doc QA data input, resulting in a multi-turn format and significantly improving the training efficiency.
-        - Single-Doc QA: Similar to [LLama2 Long](https://arxiv.org/abs/2309.16039), we constructed multi-turn QA data based on different segments within one row of long-text input.
+我们在多种长度和多种任务的评测Benchmark上验证不同版本模型的性能。
 
-We evaluated our models across various lengths and benchmarks.
-
-- ### Long Context Benchmarks
+- ### 360Zhinao-7B-Chat-32K模型长文本能力评测
 
 
-  We evaluated our 32K and 360K models on [LongBench](https://github.com/THUDM/LongBench), a multi-task bilingual benchmark for long contexts. We report results on Chinese tasks that are the most relevant to downstream applications: Single/Multi-Doc QA, Summarization, Few-Shot Learning and Code Completion.
+  我们使用LongBench验证长文本效果。[LongBench](https://github.com/THUDM/LongBench)是第一个多任务、中英双语、针对大语言模型长文本理解能力的评测基准。LongBench由六大类、二十一个不同的任务组成，我们选择其中与中文长文本应用最密切相关的中文单文档问答、多文档问答、摘要、Few-shot等任务进行评测。
 
-    | Model                     | Avg       | Single-Doc QA  | Multi-Doc QA | Summarization | Few-Shot Learning | Code Completion |
+    | Model                     | Avg       | 单文档QA  | 多文档QA   | 摘要       | Few-shot学习 | 代码补全    |
     | :------------------------ |:---------:|:--------:|:---------:|:---------:|:------------:|:---------:|
     | GPT-3.5-Turbo-16k         | 37.84     | 61.2     | 28.7      | 16        | 29.2         | 54.1      |
     | ChatGLM2-6B-32k           | 37.16     | 51.6     | 37.6      | 16.2      | 27.7         | 52.7      |
@@ -115,43 +116,43 @@ We evaluated our models across various lengths and benchmarks.
     | Qwen1.5-Chat-14B          | 39.80     | 60.39    | 27.99     | 14.77     | 37           | 58.87     |
     | 360Zhinao-7B-Chat-32K     | **45.18** | 57.18    | **48.06** | 15.03     | **44**       | 61.64     |
 
-- ### 360Zhinao-7B-Chat-360K on "NeedleInAHaystack"
+- ### 360Zhinao-7B-Chat-360K“大海捞针”测试
 
-  [NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack) places one small piece of information in different positions of long text and queries this information as a test of LLM's long-context capabilities.
+  大海捞针测试（[NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)）是将关键信息插入一段长文本的不同位置，再对该关键信息提问，从而测试大模型的长文本能力的一种方法。
 
-  360Zhinao-7B-Chat-360K could achieve over 98% accuracy on both English and Chinese NeedleInAHaystack tasks.
+  360Zhinao-7B-Chat-360K在中英文大海捞针中都能达到98%以上的准确率。
 
-  - English version（same as [NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)）
+  - 英文"大海捞针"（和[NeedleInAHaystack](https://github.com/gkamradt/LLMTest_NeedleInAHaystack)相同）
   
     <p align="center">
         <img src="assets/360Zhinao-7B-Chat-360K.en_score.png" width="600" />
     <p>
 
-    **needle**：The best thing to do in San Francisco is eat a sandwich and sit in Dolores Park on a sunny day.
+    **针**：The best thing to do in San Francisco is eat a sandwich and sit in Dolores Park on a sunny day.
 
-    **query**：What is the best thing to do in San Francisco?
+    **提问**：What is the best thing to do in San Francisco?
 
 
-  - Chinese version
+  - 中文“大海捞针”
 
     <p align="center">
         <img src="assets/360Zhinao-7B-Chat-360K.zh_score.png" width="600" />
     <p>
 
-    We constructed the Chinese version following the [SuperCLUE-200K benchmark](https://mp.weixin.qq.com/s/QgoRf2LB-7vc3vTFOHJkpw):
+    我们仿照[SuperCLUE-200K测评基准](https://mp.weixin.qq.com/s/QgoRf2LB-7vc3vTFOHJkpw)构造了中文大海捞针：
 
-    **haystack**：Chinese novels.
-  
-    **needle**：(in Chinese) 王莽是一名勤奋的店员，他每天凌晨就起床，赶在第一缕阳光照亮大地之前到达店铺，为即将开始的一天做准备。他清扫店铺，整理货架，为顾客提供方便。他对五金的种类和用途了如指掌，无论顾客需要什么，他总能准确地找到。\n然而，他的老板刘秀却总是对他吹毛求疵。刘秀是个挑剔的人，他总能在王莽的工作中找出一些小错误，然后以此为由扣他的工资。他对王莽的工作要求非常严格，甚至有些过分。即使王莽做得再好，刘秀也总能找出一些小问题，让王莽感到非常沮丧。\n王莽虽然对此感到不满，但他并没有放弃。他知道，只有通过自己的努力，才能获得更好的生活。他坚持每天早起，尽管他知道那天可能会再次被刘秀扣工资。他始终保持微笑，尽管他知道刘秀可能会再次对他挑剔。
+    **海**：长篇小说。
+    
+    **针**：王莽是一名勤奋的店员，他每天凌晨就起床，赶在第一缕阳光照亮大地之前到达店铺，为即将开始的一天做准备。他清扫店铺，整理货架，为顾客提供方便。他对五金的种类和用途了如指掌，无论顾客需要什么，他总能准确地找到。\n然而，他的老板刘秀却总是对他吹毛求疵。刘秀是个挑剔的人，他总能在王莽的工作中找出一些小错误，然后以此为由扣他的工资。他对王莽的工作要求非常严格，甚至有些过分。即使王莽做得再好，刘秀也总能找出一些小问题，让王莽感到非常沮丧。\n王莽虽然对此感到不满，但他并没有放弃。他知道，只有通过自己的努力，才能获得更好的生活。他坚持每天早起，尽管他知道那天可能会再次被刘秀扣工资。他始终保持微笑，尽管他知道刘秀可能会再次对他挑剔。
 
-    **query**：(in Chinese) 王莽在谁的手下工作？
+    **提问**：王莽在谁的手下工作？
 
 <br>
 
-# Quickstart
-Simple examples to illustrate how to use 360Zhinao-7B-Base and 360Zhinao-7B-Chat quickly using 🤖 ModelScope and 🤗 Transformers
+# 快速开始
+简单的示例来说明如何利用🤖 ModelScope和🤗 Transformers快速使用360Zhinao-7B-Base和360Zhinao-7B-Chat
 
-## Dependency Installation
+## 依赖安装
 - python 3.8 and above
 - pytorch 2.0 and above
 - transformers 4.37.2 and above
@@ -160,17 +161,18 @@ Simple examples to illustrate how to use 360Zhinao-7B-Base and 360Zhinao-7B-Chat
 ```shell
 pip install -r requirements.txt 
 ```
-We recommend installing Flash-Attention (which currently supports flash attention 2) to increase your performance and reduce your memory footprint. (flash-attention is optional and will work without installation)
+我们推荐安装flash-attention（当前已支持flash attention 2）来提高你的运行效率以及降低显存占用。(flash-attention只是可选项，不安装也可正常运行该项目)
 
 >flash-attn >= 2.3.6
 ```shell
 FLASH_ATTENTION_FORCE_BUILD=TRUE pip install flash-attn==2.3.6
 ```
 
-## 🤗 Transformers
-### Demonstration of Base Model Inference
 
-This code demonstrates fast inference with 360Zhinao-7B-Base models using transformers.
+## 🤗 Transformers
+### Base模型推理
+
+此代码演示使用transformers快速使用360Zhinao-7B-Base模型进行推理
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers.generation import GenerationConfig
@@ -196,9 +198,10 @@ inputs = inputs.to(model.device)
 pred = model.generate(input_ids=inputs["input_ids"], generation_config=generation_config)
 print("outputs:\n", tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 ```
-### Demonstration of Chat Model Inference
 
-This code demo uses transformers to quickly use the 360Zhinao-7B-Chat-4K model for inference.
+### Chat模型推理
+
+此代码演示使用transformers快速使用360Zhinao-7B-Chat-4K模型进行推理
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers.generation import GenerationConfig
@@ -233,9 +236,10 @@ print(messages)
 ```
 
 ## 🤖 ModelScope
-### Demonstration of Base Model Inference
+### Base模型推理
 
-This code demonstrates using ModelScope to quickly use the 360Zhinao-7B-Base model for inference.
+此代码演示使用ModelScope快速使用360Zhinao-7B-Base模型进行推理
+
 
 ```python
 from modelscope import AutoModelForCausalLM, AutoTokenizer
@@ -263,10 +267,9 @@ pred = model.generate(input_ids=inputs["input_ids"], generation_config=generatio
 print("outputs:\n", tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 ```
 
-### Demonstration of Chat Model Inference
+### Chat模型推理
 
-This code demonstrates using ModelScope to quickly use the 360Zhinao-7B-Chat-4K model for inference.
-
+此代码演示使用ModelScope快速使用360Zhinao-7B-Chat-4K模型进行推理
 ```python
 from modelscope import AutoModelForCausalLM, AutoTokenizer
 from modelscope import GenerationConfig
@@ -300,8 +303,8 @@ messages.append({"role": "assistant", "content": response})
 print(messages)
 ```
 
-## CLI Demo
-Use terminal interaction for a fast experience
+## 终端 Demo
+可使用终端交互实现快速体验
 ```shell
 python cli_demo.py
 ```
@@ -309,8 +312,8 @@ python cli_demo.py
     <img src="assets/cli_demo.gif" width="600" />
 <p>
 
-## Web Demo
-You can also use web interaction for a quick experience
+## 网页 Demo
+也可使用网页交互实现快速体验
 ```shell
 streamlit run web_demo.py
 ```
@@ -319,12 +322,12 @@ streamlit run web_demo.py
 <p>
 
 ## API Demo
-Start command
+启动命令
 ```shell
 python openai_api.py
 ```
 
-Request parameter
+请求参数
 ```shell
 curl 'http://localhost:8360/v1/chat/completions' \
 -H 'Content-Type: application/json' \
@@ -344,33 +347,33 @@ curl 'http://localhost:8360/v1/chat/completions' \
 
 <br>
 
-# Model Inference
-## Quantization
-We provide quantization schemes based on AutoGPTQ and open source the Int4 quantization models. 
+# 模型推理
+## 模型量化
+我们提供了基于AutoGPTQ的量化方案，并开源了Int4量化模型。
 
-## Deployment
-### vLLM Installation
-If you want to deploy and accelerate inference, we recommend using `vLLM==0.3.3`。
+## 模型部署
+### vLLM安装环境
+如希望部署及加速推理，我们建议你使用 `vLLM==0.3.3`。
 
-If you are using **CUDA 12.1 and PyTorch 2.1**, you can install vLLM directly with the following command.
+如果你使用**CUDA 12.1和PyTorch 2.1**，可以直接使用以下命令安装vLLM。
 ```shell
 pip install vllm==0.3.3
 ```
 
-Otherwise, please refer to the official vLLM [Installation Instructions](https://docs.vllm.ai/en/latest/getting_started/installation.html)。
+否则请参考vLLM官方的[安装说明](https://docs.vllm.ai/en/latest/getting_started/installation.html)。
 
->Once the installation is complete, you will need to do the following
-1. Copy the vllm/zhinao.py file to the vllm/model_executor/models directory corresponding to your env environment.
-2. Copy the vllm/serving_chat.py file to the vllm/entrypoints/openai corresponding to your env environment.
-3. Then add a line to vllm/model_executor/models/\_\_init\_\_.py
+>安装完成后，还需要以下操作~
+1. 把vllm/zhinao.py文件复制到env环境对应的vllm/model_executor/models目录下。
+2. 把vllm/serving_chat.py文件复制到env环境对应的vllm/entrypoints/openai目录下。
+3. 然后在vllm/model_executor/models/\_\_init\_\_.py文件增加一行代码
 
     ```shell
     "ZhinaoForCausalLM": ("zhinao", "ZhinaoForCausalLM"),
     ```
 
-### vLLM Service Start
+### vLLM服务启动
 
-Starting the service
+启动服务
 ```shell
 python -m vllm.entrypoints.openai.api_server \
     --served-model-name 360Zhinao-7B-Chat-4K \
@@ -382,7 +385,7 @@ python -m vllm.entrypoints.openai.api_server \
     --port 8360
 ```
 
-Use curl to request the service
+使用curl请求服务
 ```shell
 curl http://localhost:8360/v1/chat/completions \
 -H "Content-Type: application/json" \
@@ -405,9 +408,10 @@ curl http://localhost:8360/v1/chat/completions \
     ]
 }'
 ```
-Use python to request the service
+使用python请求服务
 ```python
 from openai import OpenAI
+# Set OpenAI's API key and API base to use vLLM's API server.
 openai_api_key = "EMPTY"
 openai_api_base = "http://localhost:8360/v1"
 
@@ -433,18 +437,16 @@ chat_response = client.chat.completions.create(
 print("Chat response:", chat_response)
 ```
 
-> Notice: If you need to enable repetition penalty, recommended to use *presence_penalty* and *frequency_penalty* parameters.
-
-> 
+> 注意：如需要开启重复惩罚，建议使用 *presence_penalty* 和 *frequency_penalty* 参数。
 
 <br>
 
-# Model Finetune
-## Training data
+# 模型微调
+## 训练数据
 
-Training Data: data/training_data_sample.json. The sample data is 10,000 pieces sampled from [multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M) and format converted.
+我们提供了微调训练样例数据 data/test.json，该样例数据是从 [multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M) 采样出 1 万条，并且做了格式转换。
 
-Data Format:
+数据格式:
 ```json
 [
   {
@@ -466,7 +468,9 @@ Data Format:
   }
 ]
 ```
-## Fine-tuning scripts
+
+## 微调训练
+训练脚本如下：
 ```shell
 set -x
 
@@ -482,7 +486,7 @@ NUM_NODES=1
 NUM_GPUS=8
 MASTER_PORT=29500
 
-IS_CONCAT=False # Whether to concatenate to maximum length (MAX_LEN)
+IS_CONCAT=False # 是否数据拼接到最大长度（MAX_LEN）
 
 DATA_PATH="./data/training_data_sample.json"
 MODEL_PATH="qihoo360/360Zhinao-7B-Base"
@@ -522,15 +526,15 @@ deepspeed --hostfile ${HOSTFILE} \
 ```shell
 bash finetune/ds_finetune.sh
 ```
-- By configuring the **hostfile**, single-machine and multi-machine training can be realized.
-- By configuring **ds_config**, realize zero2 and zero3 training
-- By configuring the **fp16**、**bf16** realize mixed precision training, bf16 is recommended to be consistent with the pre-trained model.
-- By configuring **is_concat**, Whether the training data is concatenated or not is controlled. When the magnitude of the training data is large, the training efficiency can be improved by concatenation.
+- 可通过配置hostfile，实现单机、多机训练。
+- 可通过配置ds_config，实现zero2、zero3。
+- 可通过配置fp16、bf16实现混合精度训练，建议使用bf16，与预训练模型保持一致。
+- 可通过配置is_concat参数，控制训练数据是否拼接，当训练数据量级较大时，可通过拼接提升训练效率。
 
 <br>
 
-# License
+# 许可证
 
-The source code of this warehouse follows the open source license Apache 2.0.
+本仓库源码遵循开源许可证Apache 2.0。
 
-The 360 ​Zhinao open source model supports commercial use. If you need to use this model and its derivative models for commercial purposes, please contact us via email (g-zhinao-opensource@360.cn) to apply. For the specific license agreement, please see [《360 Zhinao Open Source Model License》](https://github.com/Qihoo360/360zhinao/blob/main/360%E6%99%BA%E8%84%91%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E8%AE%B8%E5%8F%AF%E8%AF%81.txt).
+360智脑开源模型支持商用，若需将本模型及衍生模型用于商业用途，请通过邮箱(g-zhinao-opensource@360.cn)联系进行申请， 具体许可协议请见[《360智脑开源模型许可证》](https://github.com/Qihoo360/360zhinao/blob/main/360%E6%99%BA%E8%84%91%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E8%AE%B8%E5%8F%AF%E8%AF%81.txt)。
