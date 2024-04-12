@@ -35,7 +35,7 @@ Notable features of our 360Zhinao models are:
 <br>
 
 # News and Updates
-- 2024.04.12 We released **360Zhinao-7B** v1.0, including the base model and three chat models with context lengths 4K, 32K and 360K. 
+- [2024.04.12] We released **360Zhinao-7B** v1.0, including the base model and three chat models with context lengths 4K, 32K and 360K. 
 
 <br>
 
