@@ -9,7 +9,7 @@
 </h1>
 </div>
 <div align="center">
-    🤗 <a href="https://huggingface.co/qihoo360">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp
+    🤗 <a href="https://huggingface.co/qihoo360">HuggingFace</a>&nbsp&nbsp | &nbsp&nbsp
     🤖 <a href="https://www.modelscope.cn/profile/qihoo360">ModelScope</a>&nbsp&nbsp ｜ &nbsp&nbsp
     💬 <a href="./assets/WeChat.png">WeChat (微信)</a>&nbsp&nbsp
 </div>
@@ -20,22 +20,22 @@
 
 <br>
 
-# Models Introduction
- 🎉🎉🎉We open-source the 360Zhinao model series:
+# Introduction
+ 🎉🎉🎉 We released the 360Zhinao model series:
  - **360Zhinao-7B-Base**
  - **360Zhinao-7B-Chat-4K**
  - **360Zhinao-7B-Chat-32K**
  - **360Zhinao-7B-Chat-360K**
 
+Notable features of our 360Zhinao models are:
 
-The characteristics of the 360Zhinao open-source models are：
-- **Base Model:** Leveraging a high-quality corpus of 3.4 trillion Tokens which mainly consist of Chinese, English and code, we achieved competitive performance on relevant benchmark evaluations of the same model scale.
-- **Chat Model:** Powerful chat capabilities and three different sequence lengths of 4K, 32K and 360K. 360K (about 500k Chinese characters) is the longest sequcence length among open-sourced Chinese models until now.
+- **Base Model:** Leveraging a high-quality corpus of 3.4 trillion tokens consisting of mainly Chinese, English and code, we achieved competitive performance on relevant benchmarks against other 7B models.
+- **Chat Models:** Powerful chat capabilities and three context lengths of 4K, 32K and 360K. 360K (around 500k Chinese characters) is the longest context length among Chinese open-sourced models upon release (Apr. 11, 2024).
 
 <br>
 
 # News and Updates
-- 2024.04.12 We release **360Zhinao-7B** 1.0 version,  include the base model and three chat model with sequence lengths of 4K, 32K adn 360K. 
+- 2024.04.12 We released **360Zhinao-7B** v1.0, including the base model and three chat models with context lengths 4K, 32K and 360K. 
 
 <br>
 
@@ -50,7 +50,7 @@ The characteristics of the 360Zhinao open-source models are：
 <br>
 
 # Download URL
-See the following table for this release and download links:
+
 | Size | Model | BF16 | Int4|
 |-|-|-|-|
 | 7B | 360Zhinao-7B-Base | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Base/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Base">🤗</a> |  |
@@ -62,7 +62,11 @@ See the following table for this release and download links:
 
 # Model Evaluation
 ## Base Model
-We evaluate the performance of our model on the OpenCompass evaluation datasets, including C-Eval, AGIEval, MMLU, CMMLU, HellaSwag, MATH, GSM8K, HumanEval, MBPP, BBH, LAMBADA. The ablity evaluated of model include natural language understanding, knowledge, mathematical computation and reasoning, code generation, logical reasoning, etc.
+We evaluate our model on [OpenCompass](https://opencompass.org.cn/home), more specifically on C-Eval, AGIEval, MMLU, CMMLU, HellaSwag, MATH, GSM8K, HumanEval, MBPP, BBH and LAMBADA. 
+These benchmarks test the model on
+natural language understanding, knowledge, mathematics, code generation and logical reasoning, etc.
+
+Results are listed as follows and could be viewed or reproduced on [OpenCompass leaderboard](https://rank.opencompass.org.cn/leaderboard-llm).
 
 | <div style="width: 100pt">Model</div> | AVG   | CEval | AGIEval | MMLU | CMMLU | HellaSwag | MATH | GSM8K | HumanEval | MBPP | BBH | LAMBADA |
 |:----------------------|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|:---------:|
@@ -82,28 +86,29 @@ We evaluate the performance of our model on the OpenCompass evaluation datasets,
 | Yi-6B                 | 47.8      | 73        | 44.3      | 64        | **73.5**  | 73.1      | 6.3       | 39.9      | 15.2      | 23.6      | 44.9      | 68        |
 | **360Zhinao-7B**      | 56.15     | **74.11** | 49.49     | **67.44** | 72.38     | **83.05** | 16.38     | 53.83     | 35.98     | 42.4      | 43.95     | **78.59** |
 
-The above results could be viewed or reproduced on [Opencompass](https://rank.opencompass.org.cn/leaderboard-llm).
 
 ## Chat Models
 
-  We adopted a two-stage approach to train the long context models.
+The 4K and 32K models are trained separately with the same 4K SFT data.
 
-  **First stage**: We increased RoPE base and extended the context length to 32K.
-    - Firstly, we performed Continual Pretraining on approximately 5B tokens with a 32K context window.
-    - Then during the SFT stage, we fine-tuned the model using long data from various sources, including high-quality human-labeled 32K data.
+To train the long-context models, we adopted a two-stage approach.
 
-  **Second stage**: We extended the context length to 360K, training with the following data:
-    - A small amount of high-quality human-labeled super-long data.
-    - Due to the scarcity of annotated super-long data, we constructed various forms of synthetic data.
-        - Multi-Doc QA: Similar to [Ziya-Reader](https://arxiv.org/abs/2311.09198), we generated multi-document QA pairs based on 360's database. Multiple QA pairs are constructed for one row of Multi-Doc QA data input, resulting in a multi-turn format and significantly improving the training efficiency.
-        - Single-Doc QA: Similar to [LLama2 Long](https://arxiv.org/abs/2309.16039), we constructed multi-turn QA data based on different segments within one row of long-text input.
+**First stage**: We increased RoPE base and extended the context length to 32K.
+- Firstly, we performed Continual Pretraining on approximately 5B tokens with a 32K context window.
+- Then during the SFT stage, we finetuned the model using long data from various sources, including high-quality human-labeled 32K data.
+
+**Second stage**: We extended the context length to 360K, training with the following data:
+- A small amount of high-quality human-labeled super-long data.
+- Due to the scarcity of annotated super-long data, we constructed various forms of synthetic data.
+    - Multi-Doc QA: Similar to [Ziya-Reader](https://arxiv.org/abs/2311.09198), we generated multi-document QA pairs based on 360's database. Multiple QA pairs are constructed for one row of Multi-Doc QA data input, resulting in a multi-turn format and significantly improving the training efficiency.
+    - Single-Doc QA: Similar to [LLama2 Long](https://arxiv.org/abs/2309.16039), we constructed multi-turn QA data based on different segments within one row of long-text input.
 
 We evaluated our models across various lengths and benchmarks.
 
 - ### Long Context Benchmarks
 
 
-  We evaluated our 32K and 360K models on [LongBench](https://github.com/THUDM/LongBench), a multi-task bilingual benchmark for long contexts. We report results on Chinese tasks that are the most relevant to downstream applications: Single/Multi-Doc QA, Summarization, Few-Shot Learning and Code Completion.
+  We evaluated our 32K and 360K models on [LongBench](https://github.com/THUDM/LongBench), a multi-task bilingual benchmark for long contexts. We report results on **Chinese** tasks most relevant to downstream applications: Single/Multi-Doc QA, Summarization, Few-Shot Learning and Code Completion.
 
     | Model                     | Avg       | Single-Doc QA  | Multi-Doc QA | Summarization | Few-Shot Learning | Code Completion |
     | :------------------------ |:---------:|:--------:|:---------:|:---------:|:------------:|:---------:|
@@ -149,18 +154,19 @@ We evaluated our models across various lengths and benchmarks.
 <br>
 
 # Quickstart
-Simple examples to illustrate how to use 360Zhinao-7B-Base and 360Zhinao-7B-Chat quickly using 🤖 ModelScope and 🤗 Transformers
+We provide simple examples illustrating the use of 360Zhinao-7B-Base and 360Zhinao-7B-Chat on 🤖ModelScope and 🤗Transformers.
 
 ## Dependency Installation
-- python 3.8 and above
-- pytorch 2.0 and above
-- transformers 4.37.2 and above
-- CUDA 11.4 and above are recommended.
+- python >= 3.8
+- pytorch >= 2.0
+- transformers >= 4.37.2
+- CUDA >= 11.4
 
 ```shell
 pip install -r requirements.txt 
 ```
-We recommend installing Flash-Attention (which currently supports flash attention 2) to increase your performance and reduce your memory footprint. (flash-attention is optional and will work without installation)
+
+Optionally, we recommend installing Flash-Attention 2 to improve performance and reduce memory footprint.
 
 >flash-attn >= 2.3.6
 ```shell
@@ -170,7 +176,6 @@ FLASH_ATTENTION_FORCE_BUILD=TRUE pip install flash-attn==2.3.6
 ## 🤗 Transformers
 ### Demonstration of Base Model Inference
 
-This code demonstrates fast inference with 360Zhinao-7B-Base models using transformers.
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers.generation import GenerationConfig
@@ -198,7 +203,6 @@ print("outputs:\n", tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 ```
 ### Demonstration of Chat Model Inference
 
-This code demo uses transformers to quickly use the 360Zhinao-7B-Chat-4K model for inference.
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from transformers.generation import GenerationConfig
@@ -235,8 +239,6 @@ print(messages)
 ## 🤖 ModelScope
 ### Demonstration of Base Model Inference
 
-This code demonstrates using ModelScope to quickly use the 360Zhinao-7B-Base model for inference.
-
 ```python
 from modelscope import AutoModelForCausalLM, AutoTokenizer
 from modelscope import GenerationConfig
@@ -264,8 +266,6 @@ print("outputs:\n", tokenizer.decode(pred.cpu()[0], skip_special_tokens=True))
 ```
 
 ### Demonstration of Chat Model Inference
-
-This code demonstrates using ModelScope to quickly use the 360Zhinao-7B-Chat-4K model for inference.
 
 ```python
 from modelscope import AutoModelForCausalLM, AutoTokenizer
@@ -301,7 +301,8 @@ print(messages)
 ```
 
 ## CLI Demo
-Use terminal interaction for a fast experience
+Use terminal for command-line interface:
+
 ```shell
 python cli_demo.py
 ```
@@ -310,7 +311,7 @@ python cli_demo.py
 <p>
 
 ## Web Demo
-You can also use web interaction for a quick experience
+
 ```shell
 streamlit run web_demo.py
 ```
@@ -319,12 +320,12 @@ streamlit run web_demo.py
 <p>
 
 ## API Demo
-Start command
+Launch api:
 ```shell
 python openai_api.py
 ```
 
-Request parameter
+Then request with parameters:
 ```shell
 curl 'http://localhost:8360/v1/chat/completions' \
 -H 'Content-Type: application/json' \
@@ -346,23 +347,23 @@ curl 'http://localhost:8360/v1/chat/completions' \
 
 # Model Inference
 ## Quantization
-We provide quantization schemes based on AutoGPTQ and open source the Int4 quantization models. 
+We provide quantization schemes based on AutoGPTQ and release the Int4 quantization models. 
 
 ## Deployment
 ### vLLM Installation
-If you want to deploy and accelerate inference, we recommend using `vLLM==0.3.3`。
+We recommend using `vLLM==0.3.3`.
 
-If you are using **CUDA 12.1 and PyTorch 2.1**, you can install vLLM directly with the following command.
+If you are using **CUDA 12.1 and PyTorch 2.1**, you can install vLLM directly with:
 ```shell
 pip install vllm==0.3.3
 ```
 
-Otherwise, please refer to the official vLLM [Installation Instructions](https://docs.vllm.ai/en/latest/getting_started/installation.html)。
+Otherwise, please refer to the official vLLM [Installation Instructions](https://docs.vllm.ai/en/latest/getting_started/installation.html).
 
->Once the installation is complete, you will need to do the following
-1. Copy the vllm/zhinao.py file to the vllm/model_executor/models directory corresponding to your env environment.
-2. Copy the vllm/serving_chat.py file to the vllm/entrypoints/openai corresponding to your env environment.
-3. Then add a line to vllm/model_executor/models/\_\_init\_\_.py
+After installation, perform the following steps:
+1. Copy `vllm/zhinao.py` into `vllm/model_executor/models` in your vllm installation directory (in python/conda env).
+2. Copy `vllm/serving_chat.py` into `vllm/entrypoints/openai` in your vllm installation directory.
+3. Then add a line in `vllm/model_executor/models/__init__.py`
 
     ```shell
     "ZhinaoForCausalLM": ("zhinao", "ZhinaoForCausalLM"),
@@ -370,7 +371,7 @@ Otherwise, please refer to the official vLLM [Installation Instructions](https:/
 
 ### vLLM Service Start
 
-Starting the service
+Start the service:
 ```shell
 python -m vllm.entrypoints.openai.api_server \
     --served-model-name 360Zhinao-7B-Chat-4K \
@@ -382,7 +383,7 @@ python -m vllm.entrypoints.openai.api_server \
     --port 8360
 ```
 
-Use curl to request the service
+Use curl to request the service:
 ```shell
 curl http://localhost:8360/v1/chat/completions \
 -H "Content-Type: application/json" \
@@ -405,7 +406,7 @@ curl http://localhost:8360/v1/chat/completions \
     ]
 }'
 ```
-Use python to request the service
+Use python to request the service:
 ```python
 from openai import OpenAI
 openai_api_key = "EMPTY"
@@ -433,16 +434,15 @@ chat_response = client.chat.completions.create(
 print("Chat response:", chat_response)
 ```
 
-> Notice: If you need to enable repetition penalty, recommended to use *presence_penalty* and *frequency_penalty* parameters.
+> If you need to enable repetition penalty, we recommend setting `presence_penalty` and `frequency_penalty` instead of `repetition_penalty`.
 
-> 
 
 <br>
 
 # Model Finetune
 ## Training data
 
-Training Data: data/training_data_sample.json. The sample data is 10,000 pieces sampled from [multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M) and format converted.
+Training Data: `data/training_data_sample.json`. This example data has 10,000 rows sampled from [multiturn_chat_0.8M](https://huggingface.co/datasets/BelleGroup/multiturn_chat_0.8M) with converted format.
 
 Data Format:
 ```json
@@ -466,7 +466,7 @@ Data Format:
   }
 ]
 ```
-## Fine-tuning scripts
+## Finetuning scripts
 ```shell
 set -x
 
@@ -522,15 +522,15 @@ deepspeed --hostfile ${HOSTFILE} \
 ```shell
 bash finetune/ds_finetune.sh
 ```
-- By configuring the **hostfile**, single-machine and multi-machine training can be realized.
-- By configuring **ds_config**, realize zero2 and zero3 training
-- By configuring the **fp16**、**bf16** realize mixed precision training, bf16 is recommended to be consistent with the pre-trained model.
-- By configuring **is_concat**, Whether the training data is concatenated or not is controlled. When the magnitude of the training data is large, the training efficiency can be improved by concatenation.
+- Configuring `HOSTFILE` switches between single-machine and multi-machine training.
+- configuring `ds_config` switches between zero1, zero2 and zero3.
+- `fp16, bf16` could configure mixed precision training. bf16 is recommended to be consistent with the pretrained model.
+- `is_concat` configures whether the training data is concatenated or not.
 
 <br>
 
 # License
 
-The source code of this warehouse follows the open source license Apache 2.0.
+The source code of this repository follows the open-source license Apache 2.0.
 
-The 360 ​Zhinao open source model supports commercial use. If you need to use this model and its derivative models for commercial purposes, please contact us via email (g-zhinao-opensource@360.cn) to apply. For the specific license agreement, please see [《360 Zhinao Open Source Model License》](https://github.com/Qihoo360/360zhinao/blob/main/360%E6%99%BA%E8%84%91%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E8%AE%B8%E5%8F%AF%E8%AF%81.txt).
+360​Zhinao open-source models support commercial use. If you wish to use these models or continue training them for commercial purposes, please contact us via email (g-zhinao-opensource@360.cn) to apply. For the specific license agreement, please see [<<360 Zhinao Open-Source Model License>>](https://github.com/Qihoo360/360zhinao/blob/main/360%E6%99%BA%E8%84%91%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B%E8%AE%B8%E5%8F%AF%E8%AF%81.txt).
