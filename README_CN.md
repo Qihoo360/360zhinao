@@ -314,6 +314,8 @@ python cli_demo.py
     <img src="assets/cli_demo.gif" width="600" />
 <p>
 
+注：我们尚未支持Mac上`device = 'mps'`。
+
 ## 网页 Demo
 也可使用网页交互实现快速体验
 ```shell

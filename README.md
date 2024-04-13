@@ -310,6 +310,8 @@ python cli_demo.py
     <img src="assets/cli_demo.gif" width="600" />
 <p>
 
+Note: for Mac users, `device = 'mps'` is not supported yet.
+
 ## Web Demo
 
 ```shell
