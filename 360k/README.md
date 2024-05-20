@@ -1,6 +1,6 @@
 # Model Card for llama3-8B-360Zhinao-360k-Instruct
 
-llama3-8B-360Zhinao-360k-Instruct is 360Zhinao's extension of llama3-8B-Instruct to a 360k context window.
+llama3-8B-360Zhinao-360k-Instruct is 360Zhinao's extension of llama3-8B-Instruct to a 360k context window [[GitHub]](https://github.com/Qihoo360/360zhinao/tree/main/360k).
 
 Within the 360k-token length,
 llama3-8B-360Zhinao-360k-Instruct achieves:
@@ -70,8 +70,6 @@ python -m vllm.entrypoints.openai.api_server \
       > log8.server 2>&1
 ```
 
-<!-- NIAH scripts -->
-
 
 ## Methods
 
@@ -79,7 +77,11 @@ llama3-8B-360Zhinao-360k-Instruct is trained from [llama3-8B-Instruct](https://h
 Its original context-length is 8k with RoPE base 500,000.
 
 We directly extended its context length to 360k. We changed RoPE base to 500,000,000 and trained on a combined SFT dataset of [LWM's open-sourced data](https://huggingface.co/LargeWorldModel) and internal long-context data in Chinese and English.
-We implemented SFT on top of [EasyContext](https://github.com/jzhang38/EasyContext/) but later found that turning on pretraining loss produced much better results.
+We implemented SFT on top of [EasyContext](https://github.com/jzhang38/EasyContext/) ([code](https://github.com/Qihoo360/360zhinao/blob/main/360k/train.sft.EasyContext.py) with simple derivation on loss reduction), but later found that turning on pretraining loss produced much better results.
+SFT is likely suitable for further finetuning within the already extended context window.
+
+We have been using [Megatron-LM](https://github.com/NVIDIA/Megatron-LM) for several months with tailored optimization on GPU memory. Its context parallelism wasn’t quite ready back then and we have now switched to ring attention implementations such as EasyContext.
+
 
 ## Contact & License
 Email: g-zhinao-opensource@360.cn
