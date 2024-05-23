@@ -26,6 +26,8 @@
  - **360Zhinao-7B-Chat-4K**
  - **360Zhinao-7B-Chat-32K**
  - **360Zhinao-7B-Chat-360K**
+ - **360Zhinao-search**
+ - **360Zhinao-1.8B-Reranking**
 
 360智脑大模型特点如下：
 - **基础模型**：采用 3.4 万亿 Tokens 的高质量语料库训练，以中文、英文、代码为主，在相关基准评测中，同尺寸有竞争力。
@@ -34,6 +36,8 @@
 <br>
 
 # 更新信息
+- [2024.05.23] 我们发布了360Zhinao-search以及360Zhinao-1.8B-Reranking两个模型，分别在[C-MTEB 榜单](https://huggingface.co/spaces/mteb/leaderboard)的Retrieval和Reranking任务上排名第一。
+- [2024.05.20] 我们将llama3的窗口长度扩展到360k并发布了**llama3-8B-360Zhinao-360k-Instruct**<a href="https://huggingface.co/qihoo360/llama3-8B-360Zhinao-360k-Instruct">🤗</a> 详见[这里](./360k).
 - [2024.04.12] 我们发布了360Zhinao-7B 1.0版本，同时开放Base模型和4K、32K、360K三种文本长度的Chat模型。
 
 <br>
@@ -56,6 +60,8 @@
 | 7B | 360Zhinao-7B-Chat-4K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-4K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-4K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-4K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-4K-Int4">🤗</a> |
 | 7B | 360Zhinao-7B-Chat-32K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-32K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-32K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-32K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-32K-Int4">🤗</a> |
 | 7B | 360Zhinao-7B-Chat-360K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-360K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-360K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-360K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-360K-Int4">🤗</a> |
+| 325M | 360Zhinao-search |  |  |
+| 1.8B | 360Zhinao-1.8B-Reranking |  |  |
 
 <br>
 
@@ -536,6 +542,127 @@ bash finetune/ds_finetune.sh
 - 可通过配置is_concat参数，控制训练数据是否拼接，当训练数据量级较大时，可通过拼接提升训练效率。
 
 <br>
+
+
+# 360Zhinao-search 模型介绍
+360Zhinao-search采用自研BERT类模型作为基座，进行多任务微调。在C-MTEB榜单的Retrieval任务上平均得分75.05，目前排名第一。
+[C-MTEB-Retrieval榜单](https://huggingface.co/spaces/mteb/leaderboard)共包含8个不同领域下的[query, passage]相似度检索子任务, 使用NDCG@10(Norma    lized Discounted Cumulative Gain @ 10)作为评判指标。
+
+| Model | T2Retrieval | MMarcoRetrieval | DuRetrieval | CovidRetrieval | CmedqaRetrieval | EcomRetrieval | MedicalRetrieval | VideoRetrieval |     Avg |
+|:-------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+|**360Zhinao-search** | 87.12 | 83.32 | 87.57 | 85.02 | 46.73 | 68.9 | 63.69 | 78.09 | **75.05** |
+|AGE_Hybrid | 86.88 | 80.65 | 89.28 | 83.66 | 47.26 | 69.28 | 65.94 | 76.79 | 74.97 |
+|OpenSearch-text-hybrid | 86.76 | 79.93 | 87.85 | 84.03 | 46.56 | 68.79 | 65.92 | 75.43 | 74.41 |
+|piccolo-large-zh-v2 | 86.14 | 79.54 | 89.14 | 86.78 | 47.58 | 67.75 | 64.88 | 73.1 | 74.36 |
+|stella-large-zh-v3-1792d | 85.56 | 79.14 | 87.13 | 82.44 | 46.87 | 68.62 | 65.18 | 73.89 | 73.6 |
+
+## 优化点
+1. 数据过滤：严防CMTEB-Retrieval任务榜单测试数据泄露，清洗测试集所有的query和passage；
+2. 数据源强化：利用开源数据，LLM合成数据提升数据多样性；
+3. 负例挖掘：采用多种方式深度挖掘难分负例，提升信息增益；
+4. 训练效率：多机多卡+Deepspeed的方式，优化GPU显存利用率。
+
+## 环境要求
+```bash
+cd Retrieval
+pip install -r requirements.txt
+```
+
+## 训练脚本
+```bash
+cd Retrieval/finetune
+sh train.sh
+```
+
+## 推理脚本
+```bash
+cd Retrieval/eval
+python test_model.py
+```
+
+## C-MTEB榜单测试脚本
+```bash
+cd Retrieval/eval
+sh eval.sh
+```
+
+## 参考
+[bge微调代码](https://github.com/FlagOpen/FlagEmbedding/tree/master/examples/finetune)
+[C-MTEB官方测试脚本](https://github.com/FlagOpen/FlagEmbedding/tree/master/C_MTEB)
+
+
+
+# 360Zhinao-1.8B-Reranking 模型介绍
+360Zhinao-1.8B-Reranking模型采用自研的360Zhinao_1.8B_Base模型为基座模型，在C-MTEB榜单的Reranking任务上平均得分70.13分，目前全模型排名第一，开>    源模型排名第一，为生成式模型做判别任务打开了新的可能性。
+
+[C-MTEB-Reranking榜单](https://huggingface.co/spaces/mteb/leaderboard)是一个通用Reranking榜单，榜单包含四个子任务，是不同领域下的用户问题和答>    案的相似度判断任务，榜单使用MAP(Mean-average-precision)作为评判指标。目前该榜单上的开源模型基本都是双向的判别式模型(BERT类模型)，唯一的单向生>    成式模型(GPT类模型)是gte-Qwen1.5-7B-instruct，平均得分66.38分。
+
+| Model | T2Reranking | MMarcoReranking | CMedQAv1 | CMedQAv2 | Avg |
+|:-------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|
+| **360Zhinao-1.8B-Reranking** | **68.55** | **37.29** | **86.75** | **87.92** | **70.13** |
+| piccolo-large-zh-v2 | 67.15 | 33.39 | 90.14 | 89.31 | 70 |
+| Baichuan-text-embedding | 67.85 | 34.3 | 88.46 | 88.06 | 69.67 |
+| stella-mrl-large-zh-v3.5-1792d | 66.43 | 28.85 | 89.18 | 89.33 | 68.45 |
+| PEG | 69.43 | 33.55 | 86.56 | 84.09 | 68.41 |
+| bge-reranker-base | 67.28 | 35.46 | 81.27 | 84.1 | 67.03 |
+| bge-reranker-large | 67.6 | 37.17 | 82.14 | 84.19 | 67.78 |
+
+
+## 优化点
+通过迭代式发现和解决以下的技术问题，不断激发大模型在预训练阶段蕴含的世界知识，更好的打通生成式模型-判别式任务的鸿沟。
+
+1. 数据清洗：模型训练没有采用世界知识，即既没有采用领域数据继续预训练，也没有微调榜单四个数据集之外的数据集。只使用榜单内的四个数据集，细心的>    迭代式的进行数据感知，有针对性的对不同数据集进行数据清洗和挖掘，保证单任务排名能够达到前三水平。
+2. 解决任务冲突问题：四个任务合并时，由于知识领域分布不同、回答模式不同、训练数据量不同、收敛步数不同甚至序列长度不同等原因，不同任务间存在冲>    突问题，深入解决冲突问题，得到综合指标最好的通用模型。
+3. 解决训练不稳定问题：与生成任务会生成多个字符不同，使用生成式模型进行判别式任务，需要模型给出一个连续的数值，因此在训练过程中存在震荡问题，>    深入解决训练不稳定问题，得出一个泛化性和鲁棒性更好的模型。
+
+
+## 环境要求
+```bash
+cd Reranking/
+pip install -r requirements.txt
+```
+如果你的显卡支持fp16或bf16精度，我们还推荐安装[flash-attention](https://github.com/Dao-AILab/flash-attention)（**当前已支持flash attention 2**    ）来提高你的运行效率以及降低显存占用。(**flash-attention只是可选项，不安装也可正常运行该项目**)
+
+```bash
+git clone https://github.com/Dao-AILab/flash-attention
+cd flash-attention && pip install .
+# 下方安装可选，安装可能比较缓慢。
+# pip install csrc/layer_norm
+# 如果flash-attn版本高于2.1.1，下方无需安装。
+# pip install csrc/rotary
+```
+
+## 数据输入格式
+```json
+[
+  {
+    "id": "identity_0",
+    "conversations": [
+      {
+        "from": "user",
+        "value": "天空是什么颜色的\n\n天空是蓝色的"
+      },
+      {
+        "from": "assistant",
+        "value": "3"
+      }
+    ]
+  }
+]
+```
+
+## 训练脚本
+```bash
+cd Reranking
+sh finetune/finetune_ds.sh
+```
+
+## 推理脚本
+```bash
+cd Reranking
+python test_model.py
+```
+
 
 # 许可证
 

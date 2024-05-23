@@ -1,0 +1,10 @@
+accelerate==0.20.3
+beir==2.0.0
+datasets==2.13.2
+deepspeed==0.14.1
+numpy==1.21.6
+tokenizers==0.13.3
+torch==1.13.1
+transformers==4.30.2
+wandb==0.16.2
+mteb==1.1.1

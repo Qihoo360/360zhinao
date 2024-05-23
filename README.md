@@ -26,6 +26,8 @@
  - **360Zhinao-7B-Chat-4K**
  - **360Zhinao-7B-Chat-32K**
  - **360Zhinao-7B-Chat-360K**
+ - **360Zhinao-search**
+ - **360Zhinao-1.8B-Reranking**
 
 Notable features of our 360Zhinao models are:
 
@@ -35,6 +37,7 @@ Notable features of our 360Zhinao models are:
 <br>
 
 # News and Updates
+- [2024.05.23] We released two models, 360Zhinao-search and 360Zhinao-1.8B-Reranking, which ranked first respectively in the Retrieval and Reranking tasks of [C-MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard) .
 - [2024.05.20] We extended llama3 and released **llama3-8B-360Zhinao-360k-Instruct**<a href="https://huggingface.co/qihoo360/llama3-8B-360Zhinao-360k-Instruct">🤗</a> Details [here](./360k).
 - [2024.04.12] We released **360Zhinao-7B** v1.0, including the base model and three chat models with context lengths 4K, 32K and 360K. 
 
@@ -58,6 +61,8 @@ Notable features of our 360Zhinao models are:
 | 7B | 360Zhinao-7B-Chat-4K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-4K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-4K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-4K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-4K-Int4">🤗</a> |
 | 7B | 360Zhinao-7B-Chat-32K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-32K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-32K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-32K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-32K-Int4">🤗</a> |
 | 7B | 360Zhinao-7B-Chat-360K | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-360K/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-360K">🤗</a> | <a href="https://www.modelscope.cn/models/qihoo360/360Zhinao-7B-Chat-360K-Int4/summary">🤖</a>  <a href="https://huggingface.co/qihoo360/360Zhinao-7B-Chat-360K-Int4">🤗</a> |
+| 325M | 360Zhinao-search |  |  |
+| 1.8B | 360Zhinao-1.8B-Reranking |  |  |
 
 <br>
 
@@ -531,6 +536,129 @@ bash finetune/ds_finetune.sh
 - `is_concat` configures whether the training data is concatenated or not.
 
 <br>
+
+
+# 360Zhinao-search Model Introduction
+360Zhinao-search uses the self-developed BERT model as the base for multi-task fine-tuning, which has an average score of 75.05 on the Retriev    al task on the C-MTEB-Retrieval benchmark, currently ranking first.
+[C-MTEB-Retrieval leaderboard](https://huggingface.co/spaces/mteb/leaderboard) contains a total of 8 [query, passage] similarity retrieval sub    tasks in different fields, using NDCG@10 (Normalized Discounted Cumulative Gain @ 10) as the evaluation index.
+
+| Model | T2Retrieval | MMarcoRetrieval | DuRetrieval | CovidRetrieval | CmedqaRetrieval | EcomRetrieval | MedicalRetrieval | VideoRetrieval |     Avg |
+|:-------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|:--------:|
+|**360Zhinao-search** | 87.12 | 83.32 | 87.57 | 85.02 | 46.73 | 68.9 | 63.69 | 78.09 | **75.05** |
+|AGE_Hybrid | 86.88 | 80.65 | 89.28 | 83.66 | 47.26 | 69.28 | 65.94 | 76.79 | 74.97 |
+|OpenSearch-text-hybrid | 86.76 | 79.93 | 87.85 | 84.03 | 46.56 | 68.79 | 65.92 | 75.43 | 74.41 |
+|piccolo-large-zh-v2 | 86.14 | 79.54 | 89.14 | 86.78 | 47.58 | 67.75 | 64.88 | 73.1 | 74.36 |
+|stella-large-zh-v3-1792d | 85.56 | 79.14 | 87.13 | 82.44 | 46.87 | 68.62 | 65.18 | 73.89 | 73.6 |
+
+## Optimization points
+1. Data filtering: Strictly prevent the C-MTEB-Retrieval test data from leaking, and clean all queries and passages in the test set;
+2. Data source enhancement: Use open source data and LLM synthetic data to improve data diversity;
+3. Negative example mining: Use multiple methods to deeply mine difficult-to-distinguish negative examples to improve information gain;
+4. Training efficiency: multi-machine multi-CPU + Deepspeed method to optimize GPU memory utilization.
+
+## Environmental requirements
+```bash
+cd Retrieval
+pip install -r requirements.txt
+```
+
+## Training script
+```bash
+cd Retrieval/finetune
+sh train.sh
+```
+
+## Inference script
+```bash
+cd Retrieval/eval
+python test_model.py
+```
+
+## C-MTEB test script
+```bash
+cd Retrieval/eval
+sh eval.sh
+```
+
+## Reference
+[bge fine-tuning code](https://github.com/FlagOpen/FlagEmbedding/tree/master/examples/finetune)
+[C-MTEB official test script](https://github.com/FlagOpen/FlagEmbedding/tree/master/C_MTEB)
+
+
+
+# 360Zhinao-1.8B-Reranking Model Introduction
+The 360Zhinao-1.8B-Reranking model utilizes the self-developed 360Zhinao_1.8B_base model as its foundation. Our self-developed unidirectional     generative model, 360Zhinao_1.8B_reranking, achieved an average score of 70.13, currently ranking first overall and first among open-source mo    dels, opening up new possibilities for generative models to undertake discriminative tasks.
+
+[C-MTEB-Reranking leaderboard](https://huggingface.co/spaces/mteb/leaderboard) contains four subtasks, which are tasks of judging the similari    ty of user questions and answers in different fields. It uses MAP (Mean-average-precision) as the evaluation index. Currently, the open-source     models on this leaderboard are primarily bidirectional discriminative models (BERT-like models). The only unidirectional generative model (GP    T-like model) is gte-Qwen1.5-7B-instruct, which has an average score of 66.38, ranking 25th, with less than ideal results.
+
+
+| Model | T2Reranking | MMarcoReranking | CMedQAv1 | CMedQAv2 | Avg |
+|:-------------------------------|:--------:|:--------:|:--------:|:--------:|:--------:|
+| **360Zhinao-1.8B-Reranking** | **68.55** | **37.29** | **86.75** | **87.92** | **70.13** |
+| piccolo-large-zh-v2 | 67.15 | 33.39 | 90.14 | 89.31 | 70 |
+| Baichuan-text-embedding | 67.85 | 34.3 | 88.46 | 88.06 | 69.67 |
+| stella-mrl-large-zh-v3.5-1792d | 66.43 | 28.85 | 89.18 | 89.33 | 68.45 |
+| PEG | 69.43 | 33.55 | 86.56 | 84.09 | 68.41 |
+| bge-reranker-base | 67.28 | 35.46 | 81.27 | 84.1 | 67.03 |
+| bge-reranker-large | 67.6 | 37.17 | 82.14 | 84.19 | 67.78 |
+
+
+## Optimization points
+Through iterative discovery and resolution of the following technical issues, it continuously stimulates the world knowledge inherent in the l    arge model during the pre-training phase, better bridging the gap between generative models and discriminative tasks.
+
+1. Data Processing: The model training did not utilize world knowledge, meaning it neither continued pre-training with domain-specific data no    r fine-tuned datasets outside of the four datasets on the leaderboard. It only used the four datasets within the leaderboard, carefully iterat    ing through data perception, and targeting different datasets for data cleaning and mining to ensure that the ranking in individual tasks coul    d reach the top three.
+2. Resolving Task Conflicts: When merging four tasks, due to different data domain distributions, answer patterns, training data volumes, conv    ergence steps, and even sequence lengths, conflicts exist between different tasks. Deeply resolving these conflict issues is crucial to obtain    ing a universal model with the best comprehensive indicators across different tasks.
+3. Resolving Training Instability: Unlike generative tasks that produce multiple characters, using generative models for discriminative tasks     requires the model to output a continuous value. Therefore, there is an oscillation problem during the training process. Deeply analyzing and     resolving training instability can result in a model with better generalization and robustness.
+
+
+# Environmental requirements
+```bash
+cd Reranking
+pip install -r requirements.txt
+```
+
+If your GPU supports fp16 or bf16 precision, we also recommend installing [flash-attention](https://github.com/Dao-AILab/flash-attention) (**n    ow with support for flash attention 2**) to improve your runtime efficiency and reduce memory usage. (**flash-attention is optional and not re    quired for running this project**)
+
+```bash
+git clone https://github.com/Dao-AILab/flash-attention
+cd flash-attention && pip install .
+# The installation below is optional and might be slow.
+# pip install csrc/layer_norm
+# No need to install the following if the flash-attn version is above 2.1.1.
+# pip install csrc/rotary
+```
+
+## Input Format
+```json
+[
+  {
+    "id": "identity_0",
+    "conversations": [
+      {
+        "from": "user",
+        "value": "What Color Is the Sky\n\nBlue"
+      },
+      {
+        "from": "assistant",
+        "value": "3"
+      }
+    ]
+  }
+]
+```
+
+## Training Script
+```bash
+cd Reranking
+sh finetune/finetune_ds.sh
+```
+
+## Inference Script
+```bash
+cd Reranking
+python test_model.py
+```
+
 
 # License
 
