@@ -11,7 +11,8 @@
 <div align="center">
     🤗 <a href="https://huggingface.co/qihoo360">Hugging Face</a>&nbsp&nbsp | &nbsp&nbsp
     🤖 <a href="https://www.modelscope.cn/profile/qihoo360">ModelScope</a>&nbsp&nbsp ｜ &nbsp&nbsp
-    💬 <a href="./assets/WeChat.png">WeChat (微信)</a>&nbsp&nbsp
+    💬 <a href="./assets/WeChat.png">WeChat (微信)</a>&nbsp&nbsp ｜ &nbsp&nbsp
+    📑 <a href="https://arxiv.org/abs/2405.13386">技术报告</a>&nbsp&nbsp
 </div>
 <br>
 <p align="center">
@@ -39,6 +40,7 @@
 - [2024.05.23] 我们发布了360Zhinao-search以及360Zhinao-1.8B-Reranking两个模型，分别在[C-MTEB 榜单](https://huggingface.co/spaces/mteb/leaderboard)的Retrieval和Reranking任务上排名第一。
 - [2024.05.20] 我们将llama3的窗口长度扩展到360k并发布了**llama3-8B-360Zhinao-360k-Instruct**<a href="https://huggingface.co/qihoo360/llama3-8B-360Zhinao-360k-Instruct">🤗</a> 详见[这里](./360k).
 - [2024.04.12] 我们发布了360Zhinao-7B 1.0版本，同时开放Base模型和4K、32K、360K三种文本长度的Chat模型。
+技术报告详见[这里](./360ZHINAO_TECHNICAL_REPORT.pdf)或[arXiv](https://arxiv.org/abs/2405.13386)。
 
 <br>
 
@@ -661,6 +663,19 @@ sh finetune/finetune_ds.sh
 ```bash
 cd Reranking
 python test_model.py
+```
+
+# 引用
+
+如果您觉得我们的工作有所帮助，欢迎引用：
+
+```
+@article{qwen,
+  title={360Zhinao Technical Report},
+  author={360Zhinao-Team},
+  journal={arXiv preprint arXiv:2405.13386},
+  year={2024}
+}
 ```
 
 

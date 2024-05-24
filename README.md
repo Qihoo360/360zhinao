@@ -11,11 +11,12 @@
 <div align="center">
     🤗 <a href="https://huggingface.co/qihoo360">HuggingFace</a>&nbsp&nbsp | &nbsp&nbsp
     🤖 <a href="https://www.modelscope.cn/profile/qihoo360">ModelScope</a>&nbsp&nbsp ｜ &nbsp&nbsp
-    💬 <a href="./assets/WeChat.png">WeChat (微信)</a>&nbsp&nbsp
+    💬 <a href="./assets/WeChat.png">WeChat (微信)</a>&nbsp&nbsp ｜ &nbsp&nbsp
+    📑 <a href="https://arxiv.org/abs/2405.13386">Technical Report</a>&nbsp&nbsp
 </div>
 <br>
 <p align="center">
- Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience and checkout the <a href="https://arxiv.org/abs/2405.13386"> arXiv report</a>.
+ Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience.
 </p>
 
 <br>
