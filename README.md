@@ -15,7 +15,7 @@
 </div>
 <br>
 <p align="center">
- Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience and checkout the [technical report](https://arxiv.org/abs/2405.13386).
+ Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience and checkout the <a href="https://arxiv.org/abs/2405.13386"> arXiv report</a>.
 </p>
 
 <br>
