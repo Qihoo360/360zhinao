@@ -15,7 +15,7 @@
 </div>
 <br>
 <p align="center">
- Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience.
+ Feel free to visit 360Zhinao's official website<a href="https://ai.360.com"> https://ai.360.com</a> for more experience and checkout the [technical report](https://arxiv.org/abs/2405.13386).
 </p>
 
 <br>
@@ -40,6 +40,7 @@ Notable features of our 360Zhinao models are:
 - [2024.05.23] We released two models, 360Zhinao-search and 360Zhinao-1.8B-Reranking, which ranked first respectively in the Retrieval and Reranking tasks of [C-MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard) .
 - [2024.05.20] We extended llama3 and released **llama3-8B-360Zhinao-360k-Instruct**<a href="https://huggingface.co/qihoo360/llama3-8B-360Zhinao-360k-Instruct">🤗</a> Details [here](./360k).
 - [2024.04.12] We released **360Zhinao-7B** v1.0, including the base model and three chat models with context lengths 4K, 32K and 360K. 
+Technical report is [here](./360ZHINAO_TECHNICAL_REPORT.pdf) and on [arXiv](https://arxiv.org/abs/2405.13386).
 
 <br>
 
@@ -657,6 +658,19 @@ sh finetune/finetune_ds.sh
 ```bash
 cd Reranking
 python test_model.py
+```
+
+# Citation
+
+If you find our work helpful, feel free to cite as:
+
+```
+@article{qwen,
+  title={360Zhinao Technical Report},
+  author={360Zhinao-Team},
+  journal={arXiv preprint arXiv:2405.13386},
+  year={2024}
+}
 ```
 
 
