@@ -666,11 +666,13 @@ python test_model.py
 If you find our work helpful, feel free to cite as:
 
 ```
-@article{qwen,
-  title={360Zhinao Technical Report},
-  author={360Zhinao-Team},
-  journal={arXiv preprint arXiv:2405.13386},
-  year={2024}
+@misc{360zhinaoteam2024360zhinao,
+      title={360Zhinao Technical Report}, 
+      author={360Zhinao Team},
+      year={2024},
+      eprint={2405.13386},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL}
 }
 ```
 
