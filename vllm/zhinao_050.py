@@ -102,7 +102,7 @@ class ZhinaoAttention(nn.Module):
         self.total_num_heads = num_heads
         assert self.total_num_heads % tp_size == 0
         self.num_heads = self.total_num_heads // tp_size
-        self.total_num_kv_heads = num_kv_heads
+        self.total_num_kv_heads = num_kv_heads // tp_size
         if self.total_num_kv_heads >= tp_size:
             # Number of KV heads is greater than TP size, so we partition
             # the KV heads across multiple tensor parallel GPUs.
@@ -389,7 +389,7 @@ class ZhinaoForCausalLM(nn.Module):
             ("gate_up_proj", "up_proj", 1),
         ]
         total_num_heads = self.config.num_attention_heads
-        total_num_kv_heads = self.config.num_attention_heads
+        total_num_kv_heads = self.config.num_key_value_heads
         num_query_heads_per_kv_head = total_num_heads // total_num_kv_heads
         params_dict = dict(self.named_parameters())
         for name, loaded_weight in weights:
